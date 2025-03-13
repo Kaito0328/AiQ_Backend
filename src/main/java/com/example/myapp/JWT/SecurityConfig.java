@@ -27,6 +27,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 @Configuration
 public class SecurityConfig {
 
+    @Value("${ALLOWED_ORIGINS:*}") // ← 環境変数から取得（デフォルトは * ）
+    private String allowedOrigins;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
             JWTAuthenticationFilter jwtFilter) throws Exception {
@@ -75,8 +78,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        List<String> allowedOriginList = Arrays.asList(allowedOrigins.split(","));
         // すべてのオリジンを許可。必要に応じて、"http://localhost:3000" 等に絞ることも可能
-        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
+        configuration.setAllowedOrigins(allowedOriginList);
         // OPTIONS, GET, POST, PUT, DELETE などのメソッドを許可
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         // すべてのヘッダーを許可
