@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jbdc:postgresql://db:5432/mydatabase
+    username: user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  flyway:
+    enabled: true                            # Flywayを有効化
+    url: jdbc:postgresql://db:5432/mydatabase  # データベース接続URL（Flyway用）
+    user: user                               # ユーザー名（Flyway用）
+    password: password                       # パスワード（Flyway用）
+    locations: classpath:db/migration        # マイグレーションファイルの場所
+    baseline-on-migrate: true                # 初期マイグレーション時にベースラインを作成

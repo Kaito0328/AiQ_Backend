@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JPA とデータベース接続（例：PostgreSQL）用のドライバ
+    implementation 'org.postgresql:postgresql:42.3.1'
+
+    // Jakarta アノテーション
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+
+    // Jakarta Persistence（JPA）
+    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+
+    // Spring BootとJPA、Web、セキュリティのスターター
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.2.2'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    // JWT 用のライブラリ
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2' 
+
+    // Lombokのアノテーションプロセッサ
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // 開発用ツール
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // テスト用依存関係
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+springBoot {
+    mainClass = 'com.example.myapp.MyApplication'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'com.example.myapp'
+        )
+    }
+}
