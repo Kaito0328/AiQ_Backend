@@ -1,9 +1,11 @@
 FROM eclipse-temurin:21-jdk
 
 WORKDIR /workspace
-COPY . .  # ソースコードや設定ファイルをコピー
+COPY . .
+SHELL ["/bin/bash", "-c"]
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
-# 必要なパッケージをインストール
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
@@ -20,13 +22,17 @@ RUN curl -sLo gradle.zip https://services.gradle.org/distributions/gradle-8.4-bi
 ENV GRADLE_HOME=/opt/gradle
 ENV PATH="${GRADLE_HOME}/bin:${PATH}"
 
-# Gradle Wrapper 実行権限を付与
+RUN gradle wrapper
+# gradlew の実行権限を付与
 RUN chmod +x ./gradlew
 
-# 依存関係をキャッシュ（ビルド時に実行）
+# 依存関係をキャッシュ
 RUN ./gradlew dependencies --no-daemon
 
-# ビルドを実行
+# ビルド実行
 RUN ./gradlew build --no-daemon
+
+# アプリケーションを実行
+CMD ["java", "-jar", "*.jar"]
 
 EXPOSE 8080
