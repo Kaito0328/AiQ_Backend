@@ -23,6 +23,8 @@ import com.example.myapp.service.UserService;
 import com.example.myapp.JWT.JWTAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.beans.factory.annotation.Value;
+
 
 @Configuration
 public class SecurityConfig {
