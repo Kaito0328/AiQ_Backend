@@ -3,19 +3,18 @@ server:
 
 spring:
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://db:5432/mydatabase}  # 環境変数 DATABASE_URL がなければデフォルト値を使用
-    username: ${DATABASE_USERNAME:user}
-    password: ${DATABASE_PASSWORD:password}
+    url: ${DATABASE_URL:jdbc:postgresql://postgres.railway.internal:5432/railway}  # 環境変数 DATABASE_URL がなければデフォルト値を使用
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:JXNSUDzebwxrxplYtsNxoNPOoMgEtKga}
   jpa:
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
   flyway:
     enabled: true
-    url: ${DATABASE_URL:jdbc:postgresql://db:5432/mydatabase}
-    user: ${DATABASE_USERNAME:user}
-    password: ${DATABASE_PASSWORD:password}
+    url: ${DATABASE_URL:jdbc:postgresql://postgres.railway.internal:5432/railway}
+    user: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:JXNSUDzebwxrxplYtsNxoNPOoMgEtKga}
     locations: classpath:db/migration
     baseline-on-migrate: true
   servlet:
