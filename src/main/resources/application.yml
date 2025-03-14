@@ -3,20 +3,20 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/mydatabase
-    username: user
-    password: password
+    url: ${DATABASE_URL:jdbc:postgresql://db:5432/mydatabase}  # 環境変数 DATABASE_URL がなければデフォルト値を使用
+    username: ${DATABASE_USERNAME:user}
+    password: ${DATABASE_PASSWORD:password}
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
   flyway:
-    enabled: true                            # Flywayを有効化
-    url: jdbc:postgresql://db:5432/mydatabase  # データベース接続URL（Flyway用）
-    user: user                               # ユーザー名（Flyway用）
-    password: password                       # パスワード（Flyway用）
-    locations: classpath:db/migration        # マイグレーションファイルの場所
-    baseline-on-migrate: true                # 初期マイグレーション時にベースラインを作成
+    enabled: true
+    url: ${DATABASE_URL:jdbc:postgresql://db:5432/mydatabase}
+    user: ${DATABASE_USERNAME:user}
+    password: ${DATABASE_PASSWORD:password}
+    locations: classpath:db/migration
+    baseline-on-migrate: true
   servlet:
     multipart:
       enabled: true
@@ -25,19 +25,15 @@ spring:
 
 jwt:
   secret:
-    key: "myWebAppQuizKey12345678901234567890123456789012"
+    key: ${JWT_SECRET:myWebAppQuizKey12345678901234567890123456789012}  # JWT_SECRETが設定されない場合のデフォルト
 
 gemini:
   api:
-    key: ${GEMINI_API_KEY}
+    key: ${GEMINI_API_KEY}  # 必ず環境変数 GEMINI_API_KEY を設定する
 
 logging:
   file:
     name: logs/app.log
   level:
-    org:
-      springframework:
-        security: DEBUG
-    com:
-      example:
-        myapp: DEBUG
+    org.springframework.security: DEBUG
+    com.example.myapp: DEBUG
