@@ -32,5 +32,4 @@ RUN ./gradlew build --no-daemon
 
 # ビルドした jar ファイルを実行
 CMD ["java", "-jar", "build/libs/backend-0.0.1-SNAPSHOT.jar"]
-
 EXPOSE 8080
