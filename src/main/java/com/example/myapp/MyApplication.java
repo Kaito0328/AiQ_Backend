@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.example.myapp")
+@EnableJpaRepositories(basePackages = "com.example.myapp.repository")
 @EnableAsync
 public class MyApplication {
     public static void main(String[] args) {
